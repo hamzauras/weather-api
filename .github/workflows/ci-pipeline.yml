@@ -34,11 +34,15 @@ jobs:
 
       # Install project dependencies
       - name: Install dependencies
-        run: npm install jest ts-jest @types/jest --save-dev
+        run: npm install
+
+      # Give execute permissions to jest binary
+      - name: Make jest executable
+        run: chmod +x ./node_modules/.bin/jest  
 
       # Run tests with coverage report
       - name: Run tests
-        run: npm run test
+        run: npm test
 
       # Build the project
       - name: Build project
