@@ -24,11 +24,9 @@ describe('Auth API', () => {
 
 
 
-
-
-
-// cleanup
-
+/**
+ * 
+ * 
 import prisma from '../prisma/prismaClient';
 
 afterAll(async () => {
@@ -41,3 +39,12 @@ import { redisClient } from '../src/config/redisConfig';
 afterAll(async () => {
   await redisClient.quit();
 });
+
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+// cleanup
