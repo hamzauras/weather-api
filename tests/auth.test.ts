@@ -16,44 +16,8 @@ describe('Auth API', () => {
 });
 
 
-
-
-
-// other tests
-
-
-
-
-
-
 // cleanup
-
 import prisma from '../prisma/prismaClient';
 prisma.$disconnect();
 import { redisClient } from '../src/config/redisConfig';
 redisClient.quit();
-
-
-/**
- * 
- * 
-import prisma from '../prisma/prismaClient';
-
-afterAll(async () => {
-  await prisma.$disconnect();
-  console.log('Prisma client disconnected');
-});
-
-afterAll(async () => {
-  await redisClient.quit();
-});
-
-
- * 
- * 
- * 
- * 
- */
-
-
-// cleanup
