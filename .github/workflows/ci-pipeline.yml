@@ -34,7 +34,6 @@ jobs:
 
       # Install project dependencies
       - name: Install dependencies
-        run: npm install
         run: npm install jest ts-jest @types/jest --save-dev
 
       # Run tests with coverage report
