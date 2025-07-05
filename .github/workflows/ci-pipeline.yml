@@ -38,7 +38,7 @@ jobs:
 
       # Run tests with coverage report
       - name: Run tests
-        run: npm test -- --coverage
+        run: npm run test
 
       # Build the project
       - name: Build project
