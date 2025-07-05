@@ -1,0 +1,51 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Cache node modules for faster installs
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run lint checks
+      - name: Run lint
+        run: npm run lint
+
+      # Run tests with coverage report
+      - name: Run tests
+        run: npm test -- --coverage
+
+      # Optionally upload coverage to codecov or other services here
+
+      # Build the project (if applicable)
+      - name: Build project
+        run: npm run build
