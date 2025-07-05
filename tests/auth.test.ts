@@ -24,6 +24,16 @@ describe('Auth API', () => {
 
 
 
+
+
+// cleanup
+
+import prisma from '../prisma/prismaClient';
+prisma.$disconnect();
+import { redisClient } from '../src/config/redisConfig';
+redisClient.quit();
+
+
 /**
  * 
  * 
@@ -34,11 +44,10 @@ afterAll(async () => {
   console.log('Prisma client disconnected');
 });
 
-import { redisClient } from '../src/config/redisConfig';
-
 afterAll(async () => {
   await redisClient.quit();
 });
+
 
  * 
  * 
