@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import request from 'supertest';
 import app from '../src/app';
 import { StatusCodes } from '../src/constants/statusCodes';
