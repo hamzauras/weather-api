@@ -75,3 +75,15 @@
 [2025-07-05 19:50:04] [WARN]: Login failed: Missing fields
 [2025-07-05 19:50:38] [INFO]: Incoming POST request to /api/auth/login
 [2025-07-05 19:50:38] [WARN]: Login failed: Missing fields
+[2025-07-05 21:16:18] [INFO]: Incoming POST request to /api/auth/login
+[2025-07-05 21:16:18] [WARN]: Login failed: Missing fields
+[2025-07-05 21:16:23] [INFO]: Incoming POST request to /api/auth/login
+[2025-07-05 21:16:23] [WARN]: Login failed: Missing fields
+[2025-07-05 21:16:29] [INFO]: Incoming POST request to /api/auth/login
+[2025-07-05 21:16:29] [WARN]: Login failed: Missing fields
+[2025-07-05 21:16:35] [INFO]: Incoming POST request to /api/auth/login
+[2025-07-05 21:16:35] [WARN]: Login failed: Missing fields
+[2025-07-05 21:16:41] [INFO]: Incoming POST request to /api/auth/login
+[2025-07-05 21:16:41] [WARN]: Login failed: Missing fields
+[2025-07-05 21:16:46] [INFO]: Incoming POST request to /api/auth/login
+[2025-07-05 21:16:46] [WARN]: Login failed: Missing fields
