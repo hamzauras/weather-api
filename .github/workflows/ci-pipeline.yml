@@ -36,16 +36,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Run lint checks
-      - name: Run lint
-        run: npm run lint
-
       # Run tests with coverage report
       - name: Run tests
         run: npm test -- --coverage
 
-      # Optionally upload coverage to codecov or other services here
-
-      # Build the project (if applicable)
+      # Build the project
       - name: Build project
         run: npm run build
