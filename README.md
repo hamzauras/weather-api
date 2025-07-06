@@ -122,16 +122,6 @@ To install Memurai on Windows with administrator privileges via the command line
    - Install Memurai for Windows.
    - Don't change default settings, esspecially port number:6379.
 
-3. **Verify Redis is Running:**
-   - Open **Command Prompt** or **PowerShell**.
-   - Run:
-     ```bash
-     redis-cli ping
-     ```
-   - It should respond with:
-     ```
-     PONG
-     ```
 ##  Setup Application
 
 1. **You can either clone the repository using Git or download it as a zip file and extract its contents.**  
