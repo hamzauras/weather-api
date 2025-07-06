@@ -12,6 +12,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    # Adding PostgreSQL service, test database will be weather_db_test
     services:
       postgres:
         image: postgres:14
@@ -28,14 +29,17 @@ jobs:
           --health-retries 5
 
     steps:
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      # Cache Node.js modules
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -44,9 +48,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Give execute permission to jest binary
+      - name: Make jest executable
+        run: chmod +x ./node_modules/.bin/jest  
+
+      # Give execute permission to prisma binary
+      - name: Make prisma executable
+        run: chmod +x ./node_modules/.bin/prisma 
+
+      # Wait until PostgreSQL service is ready
       - name: Wait for Postgres to be ready
         run: |
           until pg_isready -h localhost -p 5432; do
@@ -54,15 +68,22 @@ jobs:
             sleep 1
           done
 
-      - name: Run migrations (test database)
+      # Run prisma migrate to prepare the database (test DB)
+      - name: Run migrations
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/weather_db_test?schema=public
+          # Add JWT or other auth env variables here if needed, e.g.:
+          # JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: npx prisma migrate deploy
 
+      # Run tests with test DB and auth environment variables
       - name: Run tests
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/weather_db_test?schema=public
+          # JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          # Add other required env variables here
         run: npm test
 
+      # Build the project
       - name: Build project
         run: npm run build
