@@ -52,12 +52,11 @@ export async function handleRegister(req: Request, res: Response): Promise<void>
   } catch (error: unknown) {
     // EN: Known error handling
     if (error instanceof Error) {
-      if (error.message.includes(StatusCodes.PRISMA_EMAIL_IN_USE)) {
+      if (error.message!== null) {
         logger.warn(`Registration failed: Email already in use (${req.body.email})`);
         res.status(StatusCodes.BAD_REQUEST).json({ message: Messages.EMAIL_IN_USE });
         return;
       }
-      logger.error(`Registration error: ${error.message}`);
     } else {
       // EN: Log unknown error
       logger.error('Unknown registration error');

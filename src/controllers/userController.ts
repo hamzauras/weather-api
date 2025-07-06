@@ -69,7 +69,7 @@ export async function updateUserRole(req: Request, res: Response): Promise<void>
   } catch (error: unknown) {
     if (error instanceof Error && 'code' in error) {
       const err = error as { code?: string; message?: string };
-      if (err.code === StatusCodes.PRISMA_RECORD_NOT_FOUND) {
+      if (err.code !== null) {
         logger.warn(`User not found during role update: ID ${userId}`);
         res.status(StatusCodes.NOT_FOUND).json({ message: Messages.USER_NOT_FOUND });
         return;
@@ -99,7 +99,7 @@ export async function deleteUser(req: Request, res: Response): Promise<void> {
   } catch (error: unknown) {
     if (error instanceof Error && 'code' in error) {
       const err = error as { code?: string; message?: string };
-      if (err.code === StatusCodes.PRISMA_RECORD_NOT_FOUND) {
+      if (err.code !== null) {
         logger.warn(`User not found during deletion: ID ${userId}`);
         res.status(StatusCodes.NOT_FOUND).json({ message: Messages.USER_NOT_FOUND });
         return;

@@ -37,3 +37,4 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // EN: Export the app instance to be used in server startup scripts
 export default app;
+

@@ -1,7 +1,6 @@
 // EN: Swagger configuration using swagger-jsdoc for API documentation
 import swaggerJsdoc from 'swagger-jsdoc';
 import { ENV_CONFIG } from './envConfig';
-import { logger } from '../utils/logger';  // Logger import
 
 // EN: Define Swagger options, including OpenAPI info, server, security schemes, and API files
 const swaggerOptions: swaggerJsdoc.Options = {
