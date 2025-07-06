@@ -93,8 +93,6 @@ describe('Weather API', () => {
   });
    */
   
- 
-
   it('should return UNAUTHORIZED when accessing /weather/my without token', async () => {
     const res = await request(app).get('/api/weather/my');
 
