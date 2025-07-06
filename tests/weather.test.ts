@@ -1,3 +1,5 @@
+// EN: Loads environment-specific configuration values
+import { ENV_CONFIG } from '../src/config/envConfig';
 import request from 'supertest';
 import app from '../src/app';
 import { StatusCodes } from '../src/constants/statusCodes';
@@ -13,7 +15,7 @@ describe('Weather API', () => {
     jest.setTimeout(10000); // increase timeout to 10 seconds
 
     // Mock the external weather API
-    nock('https://api.openweathermap.org')
+    nock(ENV_CONFIG.BASE_URL)
       .persist() // keep the mock active for all tests
       .get(/.*/) // intercept all GET requests
       .reply(uri => {
