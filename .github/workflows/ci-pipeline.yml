@@ -12,18 +12,30 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:14
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: weather_db_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      # Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Cache node modules for faster installs
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -32,21 +44,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # Install project dependencies
       - name: Install dependencies
         run: npm install
 
-      # Give execute permissions to jest binary
-      - name: Make jest executable
-        run: chmod +x ./node_modules/.bin/jest  
+      - name: Wait for Postgres to be ready
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for Postgres to start..."
+            sleep 1
+          done
 
-      # Run tests with coverage report
+      - name: Run migrations (test database)
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/weather_db_test?schema=public
+        run: npx prisma migrate deploy
+
       - name: Run tests
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/weather_db_test?schema=public
         run: npm test
 
-       # Build the project
       - name: Build project
-        run: npm run build           
-
-       
-         
+        run: npm run build
