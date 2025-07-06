@@ -6,7 +6,7 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "test": "jest --coverage --forceExit --detectOpenHandles",
+    "test": "jest --coverage --forceExit",
     "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
