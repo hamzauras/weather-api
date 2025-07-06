@@ -35,13 +35,112 @@ This backend service allows users to fetch current weather information for a spe
 
 ## 🚀 Setup Instructions
 
-1. **Clone the Repository**  
+# Environment Setup Instructions
+
+This guide covers detailed installation steps for **Node.js**, **PostgreSQL**, and **Redis** on Windows, tailored for running the Weather API backend project.
+
+---
+
+## Node.js Installation
+
+1. **Download Node.js:**
+   - Visit [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+   - Download the **LTS (Long Term Support)** version for Windows.
+   - Look below the web page, you can see Windows Installer (.msi)
+
+2. **Install Node.js:**
+   - Run the downloaded installer.
+   - Use the default options.
+   - Make sure to **check the option to add Node.js to your PATH** environment variable.
+   - Complete the installation.
+
+3. **Verify Installation:**
+   - Open **Command Prompt** or **PowerShell**.
+   - Run:
+     ```bash
+     node -v
+     npm -v
+     ```
+   - You should see the installed versions of Node.js and npm.
+
+---
+
+## PostgreSQL Installation & Configuration (Windows)
+
+This project requires a **PostgreSQL** server running locally on port `5432`.  
+We recommend using **pgAdmin** for GUI-based database management.
+
+### 1. Download PostgreSQL
+
+- Official site: [https://www.postgresql.org/download/windows/](https://www.postgresql.org/download/windows/)
+- Download the latest version for Windows (64-bit)
+
+> 📌 **Important Locale Note:**  
+> During setup, you will be asked for a **Locale**.  
+> ❌ Do NOT choose the default `Locale`.  
+> ✅ Instead, select `English, United States` to avoid encoding issues or installer bugs.
+
+### 2. Installation Settings
+
+- Set a password for the default `postgres` user — **remember this password**
+- Setting password: `postgres` (highly recomended)
+- Install **pgAdmin** along with PostgreSQL (enabled by default)
+- By default, PostgreSQL will run on `localhost:5432`
+
+### 3. Start PostgreSQL Service
+
+After installation:
+
+- Open **pgAdmin** or use **Windows Services** panel (`services.msc`)
+- Make sure the service **"postgresql-x64-[version]"** is **Running**
+
+## Redis Installation
+
+1. **Download Redis for Windows:**
+   - Official Redis does not support Windows natively.
+   - Use [Memurai](https://www.memurai.com/get-memurai) (a native Redis-compatible Windows port)
+   - Download Memurai for Redis Developer Edition
+
+2. ****Install Memurai (WARNING!):****
+   - **You need to follow these steps and run .msi file on cmd as administrator:**
+  
+### How to Run Memurai `.msi` Installer as Administrator from CMD
+
+To install Memurai on Windows with administrator privileges via the command line:
+
+1. **Open Command Prompt as Administrator:**
+   - Press `Win` key.
+   - Type `cmd`.
+   - Right-click **Command Prompt** and select **Run as administrator**.
+
+2. **Navigate to the folder where the `.msi` installer is located:**
+   ```cmd
+   cd C:\Users\hamza\Desktop\AppNation
+   msiexec /i Memurai-for-Redis-v4.2.0.msi
+   ```
+   This will launch the Memurai installer with administrative rights, allowing proper installation.
+   - Install Memurai for Windows.
+   - Don't change default settings, esspecially port number:6379.
+
+3. **Verify Redis is Running:**
+   - Open **Command Prompt** or **PowerShell**.
+   - Run:
+     ```bash
+     redis-cli ping
+     ```
+   - It should respond with:
+     ```
+     PONG
+     ```
+##  Setup Application
+
+1. **You can either clone the repository using Git or download it as a zip file and extract its contents.**  
    ```bash
-   git clone https://github.com/<your-username>/weather-api.git
+   git clone https://github.com/hamzauras/weather-api.git
    cd weather-api
    ```
 
-2. **Install Dependencies**  
+2. **Install Dependencies (Make sure you are under the correct directory -> weather.api)**  
    ```bash
    npm install
    ```
@@ -60,7 +159,7 @@ This backend service allows users to fetch current weather information for a spe
    LOG_LEVEL=debug
    ```
 
-    ```.env.test
+   ```.env.test
    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/weather_db_test?schema=public"
    REDIS_URL="redis://localhost:6379"
    JWT_SECRET="secretpassword123TEST"
@@ -73,8 +172,7 @@ This backend service allows users to fetch current weather information for a spe
 
 4. **Setup Database**  
    ```bash
-   npx prisma migrate dev --name init
-   npx prisma db seed
+   npm run init:dbs
    ```
 
 5. **Run the Application**  
@@ -83,8 +181,8 @@ This backend service allows users to fetch current weather information for a spe
    npm run dev
    ```
    The npm run seed command is used to create the initial admin user.
-   e-mail: admin@example.com
-   password: 123456
+   - e-mail: admin@example.com
+   - password: 123456
    Access the API at: `http://localhost:3000/api`
 
 ---
