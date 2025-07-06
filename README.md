@@ -120,7 +120,7 @@ To install Memurai on Windows with administrator privileges via the command line
    ```
    This will launch the Memurai installer with administrative rights, allowing proper installation.
    - Install Memurai for Windows.
-   - Don't change default settings, esspecially port number:6379.
+   - Don't change default settings, especially port number: 6379.
 
 ##  Setup Application
 
@@ -130,7 +130,7 @@ To install Memurai on Windows with administrator privileges via the command line
    cd weather-api
    ```
 
-2. **Install Dependencies (Make sure you are under the correct directory -> weather.api)**  
+2. **Install Dependencies (Make sure you are under the correct directory -> weather-api)**  
    ```bash
    npm install
    ```
