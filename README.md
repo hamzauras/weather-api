@@ -1,15 +1,15 @@
 # 🌦 Weather API
 
-A secure, scalable, and role-based backend API built with **Node.js**, **Express.js**, and **TypeScript**, integrated with the **OpenWeather API** for weather data. The project includes JWT-based authentication, Redis caching, CI/CD setup, and full Swagger documentation.
+A secure, scalable, and role-based backend API built with **Node.js** and **TypeScript**, integrated with the **OpenWeather API** for weather data. The project includes JWT-based authentication, Redis caching, CI/CD setup, and Swagger documentation.
 
-> Developed by **Hamza Uraş** as part of a Software Engineer Case Study.
+> Developed by **Hamza Uraş** as part of a AppNation Software Engineer Case Study.
 
 ---
 
 ## 🧩 Project Overview
 
 This backend service allows users to fetch current weather information for a specific city using the OpenWeather API. Access is **role-controlled**:  
-- `ADMIN` users can **create new users** and **view all weather queries**.  
+- `ADMIN` roles can **create new users** and **view all weather queries**.  
 - `USER` roles can only **view their own weather queries**.
 
 ---
@@ -47,15 +47,28 @@ This backend service allows users to fetch current weather information for a spe
    ```
 
 3. **Environment Variables**  
-   Create `.env` and `.env.test` files based on the provided `.env.example`. Set your credentials and API keys:
+   The .env and .env.test files are available within the project. You can use them as they are or modify their contents according to your development environment. For example, if you have your own API key, you can replace it, or if the ports are not suitable, you can try using different ones. The project was developed on a Windows 10 operating system using Visual Studio Code.
 
-   ```env
+   ```.env
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/weather_db?schema=public"
+   REDIS_URL="redis://localhost:6379"
+   JWT_SECRET="secretpassword123"
+   HOST="http://localhost:"
    PORT=3000
-   HOST=http://localhost:
-   JWT_SECRET=your_jwt_secret
-   REDIS_URL=redis://localhost:6379
-   OPENWEATHER_API_KEY=your_openweather_api_key
-   DATABASE_URL=postgresql://postgres:password@localhost:5432/weather_db
+   OPENWEATHER_API_KEY="89b98e64272b863efef8635c917b19a5"
+   BASE_URL="http://api.openweathermap.org/data/2.5/weather"
+   LOG_LEVEL=debug
+   ```
+
+    ```.env.test
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/weather_db_test?schema=public"
+   REDIS_URL="redis://localhost:6379"
+   JWT_SECRET="secretpassword123TEST"
+   HOST="http://localhost:"
+   PORT=3001
+   OPENWEATHER_API_KEY="89b98e64272b863efef8635c917b19a5"
+   BASE_URL="http://api.openweathermap.org/data/2.5/weather"
+   LOG_LEVEL=debug
    ```
 
 4. **Setup Database**  
@@ -66,8 +79,12 @@ This backend service allows users to fetch current weather information for a spe
 
 5. **Run the Application**  
    ```bash
+   npm run seed 
    npm run dev
    ```
+   The npm run seed command is used to create the initial admin user.
+   e-mail: admin@example.com
+   password: 123456
    Access the API at: `http://localhost:3000/api`
 
 ---
@@ -76,6 +93,7 @@ This backend service allows users to fetch current weather information for a spe
 
 - **JWT Authentication**:  
   Users receive a JWT on login. Include it in `Authorization: Bearer <token>` header.
+  **If this step is skipped, none of the APIs (except login) will work. Therefore, after logging in and copying your token, you must click the "Authorize" button in the top right to authenticate.**
 - **Role-based Control**:  
   - **Admin**: Create users, view all weather queries.  
   - **User**: View only their own weather queries.
@@ -90,6 +108,9 @@ Explore full API docs at: [Swagger UI](http://localhost:3000/api/docs)
 |--------|------------------------|----------|---------------------------------|
 | POST   | `/auth/register`       | Admin    | Register a new user             |
 | POST   | `/auth/login`          | Public   | Login and receive JWT           |
+| GET    | `/users/`              | Admin    | Get all users info              |
+| PUT    | `/users/:id`           | Admin    | Update a user's role            |
+| DELETE | `/users/:id`           | Admin    | Delete a user                   |
 | GET    | `/weather/:city`       | User     | Get current weather (cached)    |
 | GET    | `/weather/my`          | User     | Get own query history           |
 | GET    | `/weather/all`         | Admin    | View all queries                |
@@ -148,26 +169,29 @@ npm run test
 
 ## 🤖 CI/CD (GitHub Actions)
 
-See `.github/workflows/ci.yml` for pipeline details:
-- **Node.js** setup, dependencies cache
-- **Tests** & coverage
-- **Build** process
-
+See `.github/workflows/ci-pipeline.yml` for pipeline details:
+- Node.js setup, dependencies cache
+- Unit + integration testing 
+- Code coverage reports
+- TypeScript build
+- Error tracking and monitoring
+Tests run on each push to main.
 ---
 
 ## 📌 Future Improvements
 
 - Rate limiting per IP
 - Containerize with Docker Compose
-- Blue/Green deployment
+- Email/password reset support
 - API versioning
+- Permanent data backup
 
 ---
 
 ## 👤 Author
 
 **Hamza Uraş**  
-[LinkedIn](https://www.linkedin.com/in/hamza-uras) | [GitHub](https://github.com/hamzauras)
+[LinkedIn](https://www.linkedin.com/in/hamza-uras)
 
 ---
 
